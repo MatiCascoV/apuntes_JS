@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Consulta de Usuarios</title>
+</head>
+<body>
+    <h1>Listado de Usuarios</h1>
+    <ul id="user-list">
+        <!-- Aquí se mostrarán los usuarios -->
+    </ul>
+
+    <script>
+        // Función para hacer una solicitud a la API y procesar los datos JSON
+        function getUsers() {
+            // URL de la API ficticia
+            const apiUrl = 'https://jsonplaceholder.typicode.com/users';
+
+            // Realizar la solicitud GET a la API usando fetch
+            fetch(apiUrl)
+                .then(response => response.json()) // Parsear la respuesta JSON
+                .then(data => {
+                    // Acceder a la lista de usuarios en los datos JSON
+                    const users = data;
+
+                    // Obtener la lista de usuarios en el DOM
+                    const userList = document.getElementById('user-list');
+
+                    // Limpiar cualquier contenido anterior
+                    userList.innerHTML = '';
+
+                    // Iterar a través de los usuarios y mostrarlos en la página
+                    users.forEach(user => {
+                        const listItem = document.createElement('li');
+                        listItem.textContent = `Nombre: ${user.name}, Email: ${user.email}`;
+                        userList.appendChild(listItem);
+                    });
+                })
+                .catch(error => {
+                    console.error('Hubo un error al obtener los usuarios:', error);
+                });
+        }
+
+        // Llamar a la función getUsers cuando la página se cargue
+        window.onload = getUsers;
+    </script>
+</body>
+</html>
